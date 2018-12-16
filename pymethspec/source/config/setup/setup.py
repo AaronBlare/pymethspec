@@ -22,13 +22,17 @@ class Setup:
         self.suffix = suffix
 
     def __str__(self):
+        return self.experiment.value + '/' + \
+               self.task.value + '/' + \
+               self.method.value + '/'
 
+    def get_file_name(self):
         fn = ''
         if bool(self.params):
             params_keys = list(self.params.keys())
             if len(params_keys) > 0:
                 params_keys.sort()
-                fn += '_'.join([key + '(' + str(self.params[key]) + ')'for key in params_keys])
+                fn += '_'.join([key + '(' + str(self.params[key]) + ')' for key in params_keys])
 
         if self.suffix != '':
             fn += '_' + self.suffix
@@ -36,7 +40,5 @@ class Setup:
         if fn == '':
             fn = 'default'
 
-        return self.experiment.value + '/' + \
-               self.task.value + '/' + \
-               self.method.value + '/'
+        return fn
 

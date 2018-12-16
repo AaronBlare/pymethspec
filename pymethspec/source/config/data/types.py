@@ -24,4 +24,6 @@ class DataType(Enum):
     cpg = 'cpg'
     gene = 'gene'
     bop = 'bop'
+    suppl = 'suppl'
+    cache = 'cache'
     versus = 'versus'
