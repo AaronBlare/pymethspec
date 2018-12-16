@@ -1,7 +1,8 @@
-from source.config.annotation.annotation import *
-from source.config.attribute.attribute import *
-from source.config.setup.setup import *
-from source.config.data.data import *
+from source.infrastucture.load.annotation import *
+from source.infrastucture.load.excluded import *
+from source.infrastucture.load.attributes import *
+from source.annotation.subset import *
+from source.attribute.subset import *
 
 
 class Config:
@@ -20,6 +21,20 @@ class Config:
         self.attribute = attribute
         self.target = target
 
+        self.cpg_list = []
+        self.cpg_gene_dict = {}
+        self.cpg_bop_dict = {}
+        self.gene_cpg_dict = {}
+        self.gene_bop_dict = {}
+        self.bop_cpg_dict = {}
+        self.bop_gene_dict = {}
+
+        self.attribute_indexes = []
+
+        self.excluded = load_excluded(self)
+
         self.annotation_dict = load_annotation_dict(self)
+        subset_annotations(self)
+
         self.attribute_dict = load_attribute_dict(self)
-        self.attribute_indexes = get_indexes(self)
+        subset_attributes(self)

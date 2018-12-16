@@ -5,7 +5,7 @@ import pickle
 
 
 def load_attribute_dict(config):
-    fn = get_data_base_path(config) + '/' + config.attribute.file_name
+    fn = get_data_base_path(config) + '/' + config.attribute.name
     fn_txt = fn + '.txt'
     fn_pkl = fn + '.pkl'
 
