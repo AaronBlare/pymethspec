@@ -1,10 +1,10 @@
-function [passed_names, metrics_labels, metrics_map] = lvl_1_condition(config)
+function [passed_names, metrics_labels, metrics_map] = base_condition(config)
 if strcmp(config.gender, 'versus')
-    [names, data_1, data_2] = get_gender_specific_data(config);
+    [names, data_1, data_2] = get_specific_data(config);
     
-    if config.experiment == 1
+    if config.exp_id == 1
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             sigma = 3;
             slopes_1 = data_1(:, 3);
@@ -35,9 +35,9 @@ if strcmp(config.gender, 'versus')
             
         end
         
-    elseif config.experiment == 2
+    elseif config.exp_id == 2
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             slope_lim = 0.002;
             slopes_1 = data_1(:, 3);
@@ -54,9 +54,9 @@ if strcmp(config.gender, 'versus')
             
         end
         
-    elseif config.experiment == 3
+    elseif config.exp_id == 3
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             slope_lim = 0.002;
             slopes_1 = data_1(:, 3);
@@ -75,9 +75,9 @@ if strcmp(config.gender, 'versus')
             
         end
         
-    elseif config.experiment == 4
+    elseif config.exp_id == 4
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             slope_lim = 0.002;
             slopes_1 = data_1(:, 3);
@@ -96,9 +96,9 @@ if strcmp(config.gender, 'versus')
             
         end
         
-    elseif config.experiment == 5
+    elseif config.exp_id == 5
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             sigma = 3;
             slopes_1 = data_1(:, 3);
@@ -120,9 +120,9 @@ if strcmp(config.gender, 'versus')
             
         end
         
-    elseif config.experiment == 6
+    elseif config.exp_id == 6
         
-        if strcmp(config.method, 'linreg_variance_ols')
+        if strcmp(config.method, 'variance_linreg')
             
             slopes_1 = data_1(:, 3);
             slopes_2 = data_2(:, 3);
@@ -140,9 +140,9 @@ if strcmp(config.gender, 'versus')
             num_names = num_names - 1;
             passed_names = passed_names(1:num_names, :);
         end
-    elseif config.experiment == 7
+    elseif config.exp_id == 7
         
-        if strcmp(config.method, 'linreg_variance_ols')
+        if strcmp(config.method, 'variance_linreg')
             
             allowed_slopes_var_diff = 0.0005;
             slopes_1 = data_1(:, 3);
@@ -167,11 +167,11 @@ if strcmp(config.gender, 'versus')
     end
     
 elseif strcmp(config.gender, 'any')
-    [names, data] = get_gender_neutral_data(config);
+    [names, data] = get_neutral_data(config);
     
-    if config.experiment == 3
+    if config.exp_id == 3
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             slopes = data(:, 3);
             slope_pvals = data(:, 7);
@@ -188,9 +188,9 @@ elseif strcmp(config.gender, 'any')
             
         end
         
-    elseif config.experiment == 4
+    elseif config.exp_id == 4
         
-        if strcmp(config.method, 'linreg_ols')
+        if strcmp(config.method, 'linreg')
             
             slopes = data(:, 3);
             slope_pvals = data(:, 7);
@@ -207,8 +207,8 @@ elseif strcmp(config.gender, 'any')
 
         end
     
-    elseif config.experiment == 6
-        if strcmp(config.method, 'linreg_variance_ols')
+    elseif config.exp_id == 6
+        if strcmp(config.method, 'variance_linreg')
             slopes = data(:, 3);
             slopes_var = data(:, 10);
             metrics_labels = ["slope_any", "slope_var_any"];

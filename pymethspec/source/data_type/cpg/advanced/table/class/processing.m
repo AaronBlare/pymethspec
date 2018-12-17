@@ -25,142 +25,149 @@ base_genders = ['versus'];
 base_life_style = 'any';
 base_age = 'any';
 
+base_suffixes = [''];
+base_exps_ids = [7];
 
-lvl_1_genders = ["versus"];
+advanced_experiment = 'advanced';
+advanced_task = 'table';
+advanced_methods = ['polygon'];
 
-lvl_1_scenario = 'approach';
-lvl_1_approach = 'top';
-lvl_1_methods = ["linreg_variance_ols"];
-lvl_1_suffixes = [""];
-lvl_1_experiments = [7];
+advanced_exclude = 'cluster';
+advanced_cross_reactive = 'exclude';
+advanced_snp = 'exclude';
+advanced_chr = 'non_gender';
+advanced_gene_region = 'yes';
+advanced_geo = 'any';
+advanced_probe_class = 'any';
 
-lvl_2_genders = ["versus"];
+advanced_cells = 'none';
+advanced_disease = 'any';
+advanced_genders = ['versus'];
+advanced_life_style = 'any';
+advanced_age = 'any';
 
-lvl_2_scenario = 'validation';
-lvl_2_approach = 'top';
-lvl_2_methods = ["gender_specific"];
-lvl_2_suffixes = [""];
-lvl_2_experiments = [7];
+advanced_suffixes = [''];
+advanced_exps_ids = [7];
 
 all_metrics_labels = [];
 intersection_names = [];
-lvl_1_metrics_map = {};
-lvl_2_metrics_map = {};
-lvl_1_configs = {};
-lvl_2_configs = {};
+base_metrics_map = {};
+advanced_metrics_map = {};
+base_configs = {};
+advanced_configs = {};
 
-for lvl_1_id = 1:num_base_exps
+for base_exp_id = 1:num_base_exps
     
-    clearvars config_lvl_1;
+    config_base.data_base = data_base;
+    config_base.data_type = data_type;
     
-    config_lvl_1.data_base = data_base;
-    config_lvl_1.data_type = data_type;
+    config_base.experiment = base_experiment;
+    config_base.task = base_task;
+    config_base.method = base_methods(base_exp_id);
     
-    config_lvl_1.cross_reactive = cross_reactive;
-    config_lvl_1.snp = snp;
-    config_lvl_1.chromosome_type = chromosome_type;
+    config_base.exclude = base_exclude;
+    config_base.cross_reactive = base_cross_reactive;
+    config_base.snp = base_snp;
+    config_base.chr = base_chr;
+    config_base.gene_region = base_gene_region;
+    config_base.geo = base_geo;
+    config_base.probe_class = base_probe_class;
     
-    config_lvl_1.dna_region = dna_region;
+    config_base.cells = base_cells;
+    config_base.disease = base_disease;
+    config_base.gender = base_genders(base_exp_id);
+    config_base.life_style = base_life_style;
+    config_base.age = base_age;
     
-    config_lvl_1.info_type = info_type;
+    config_base.suffix = base_suffixes(base_exp_id);
+    config_base.exp_id = base_exps_ids(base_exp_id);
     
-    config_lvl_1.scenario = lvl_1_scenario;
-    config_lvl_1.approach = lvl_1_approach;
-    config_lvl_1.method = lvl_1_methods(lvl_1_id);
+    config_base.is_clustering = 0;
     
-    config_lvl_1.disease = disease;
-    config_lvl_1.gender = lvl_1_genders(lvl_1_id);
+    config_base.up = get_up_data_path();
     
-    config_lvl_1.is_clustering = 0;
+    [names, metrics_labels, metrics_map] = base_condition(config_base);
     
-    config_lvl_1.up = get_up_data_path();
-    
-    config_lvl_1.suffix = lvl_1_suffixes(lvl_1_id);
-    
-    config_lvl_1.experiment = lvl_1_experiments(lvl_1_id);
-    
-    [names, metrics_labels, metrics_map] = lvl_1_condition(config_lvl_1);
-    
-    if lvl_1_id == 1 
+    if base_exp_id == 1 
         intersection_names = names;
     else
         intersection_names = intersect(intersection_names, names);
     end
     
     all_metrics_labels = horzcat(all_metrics_labels, metrics_labels);
-    lvl_1_metrics_map{end + 1} = metrics_map;
+    base_metrics_map{end + 1} = metrics_map;
     
-    lvl_1_configs{end + 1} = config_lvl_1;
+    base_configs{end + 1} = config_base;
 end
 
-for lvl_2_id = 1:num_advanced_exps
+for advanced_exp_id = 1:num_advanced_exps
     
-    clearvars config_lvl_2;
+    config_advanced.data_base = data_base;
+    config_advanced.data_type = data_type;
     
-    config_lvl_2.data_base = data_base;
-    config_lvl_2.data_type = data_type;
+    config_advanced.experiment = advanced_experiment;
+    config_advanced.task = advanced_task;
+    config_advanced.method = advanced_methods(advanced_exp_id);
     
-    config_lvl_2.cross_reactive = cross_reactive;
-    config_lvl_2.snp = snp;
-    config_lvl_2.chromosome_type = chromosome_type;
+    config_advanced.exclude = advanced_exclude;
+    config_advanced.cross_reactive = advanced_cross_reactive;
+    config_advanced.snp = advanced_snp;
+    config_advanced.chr = advanced_chr;
+    config_advanced.gene_region = advanced_gene_region;
+    config_advanced.geo = advanced_geo;
+    config_advanced.probe_class = advanced_probe_class;
     
-    config_lvl_2.dna_region = dna_region;
+    config_advanced.cells = advanced_cells;
+    config_advanced.disease = advanced_disease;
+    config_advanced.gender = advanced_genders(advanced_exp_id);
+    config_advanced.life_style = advanced_life_style;
+    config_advanced.age = advanced_age;
     
-    config_lvl_2.info_type = info_type;
+    config_advanced.suffix = advanced_suffixes(advanced_exp_id);
+    config_advanced.exp_id = advanced_exps_ids(advanced_exp_id);
     
-    config_lvl_2.scenario = lvl_2_scenario;
-    config_lvl_2.approach = lvl_2_approach;
-    config_lvl_2.method = lvl_2_methods(lvl_2_id);
+    config_advanced.is_clustering = 0;
     
-    config_lvl_2.disease = disease;
-    config_lvl_2.gender = lvl_2_genders(lvl_2_id);
+    config_advanced.up = get_up_data_path();
     
-    config_lvl_2.is_clustering = 0;
-    
-    config_lvl_2.up = get_up_data_path();
-    
-    config_lvl_2.suffix = lvl_2_suffixes(lvl_2_id);
-    
-    config_lvl_2.experiment = lvl_2_experiments(lvl_2_id);
-    
-    [names, metrics_labels, metrics_map] = lvl_2_condition(lvl_1_configs{target_base_exp}, config_lvl_2);
+    [names, metrics_labels, metrics_map] = advanced_condition(base_configs{target_base_exp}, config_advanced);
     
     intersection_names = intersect(intersection_names, names);
     
     all_metrics_labels = horzcat(all_metrics_labels, metrics_labels);
-    lvl_2_metrics_map{end + 1} = metrics_map;
+    advanced_metrics_map{end + 1} = metrics_map;
 
-    lvl_2_configs{end + 1} = config_lvl_2;
+    advanced_configs{end + 1} = config_advanced;
     
-    save_config = config_lvl_2;
+    save_config = config_advanced;
 end
 
 metrics_data = [];
 for name_id = 1:size(intersection_names,1)
     name = string(intersection_names(name_id));
     data = [];
-    for lvl_1_id = 1:num_base_exps
-        data = horzcat(data, lvl_1_metrics_map{lvl_1_id}(name));
+    for base_exp_id = 1:num_base_exps
+        data = horzcat(data, base_metrics_map{base_exp_id}(name));
     end
     
-    for lvl_2_id = 1:num_advanced_exps
-        data = horzcat(data, lvl_2_metrics_map{lvl_2_id}(name));
+    for advanced_exp_id = 1:num_advanced_exps
+        data = horzcat(data, advanced_metrics_map{advanced_exp_id}(name));
     end
     metrics_data = vertcat(metrics_data, data);
 end
 
-lvl_1_suffix = sprintf('%d', lvl_1_experiments(1));
-for lvl_1_id = 2:num_base_exps
-    lvl_1_suffix = sprintf('%s_%d', lvl_1_suffix, lvl_1_experiments(lvl_1_id));
+base_suffix = sprintf('%d', base_exps_ids(1));
+for base_exp_id = 2:num_base_exps
+    base_suffix = sprintf('%s_%d', base_suffix, base_exps_ids(base_exp_id));
 end
 
-lvl_2_suffix = sprintf('%d', lvl_2_experiments(1));
-for lvl_2_id = 2:num_advanced_exps
-    lvl_2_suffix = sprintf('%s_%d', lvl_2_suffix, lvl_2_experiments(lvl_2_id));
+advanced_suffix = sprintf('%d', advanced_exps_ids(1));
+for advanced_exp_id = 2:num_advanced_exps
+    advanced_suffix = sprintf('%s_%d', advanced_suffix, advanced_exps_ids(advanced_exp_id));
 end
 
-suffix = sprintf('lvl_3_by_lvl_1(%s)_lvl_2(%s)', lvl_1_suffix, lvl_2_suffix);
-path = sprintf('%s/data/%s', ...
+suffix = sprintf('class_by_base(%s)_advanced(%s)', base_suffix, advanced_suffix);
+path = sprintf('%s/%s', ...
     save_config.up, ...
     get_result_path(save_config));
 mkdir(path)

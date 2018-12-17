@@ -1,20 +1,20 @@
-function [passed_names, metrics_labels, metrics_map] = lvl_2_condition(config_lvl_1, config_lvl_2)
+function [passed_names, metrics_labels, metrics_map] = advanced_condition(config_base, config_advanced)
 
 suffix = sprintf('method(%s%s)', ...
-    config_lvl_1.method, ...
-    config_lvl_1.suffix);
-path = sprintf('%s/data/%s', ...
-    config_lvl_2.up, ...
-    get_result_path(config_lvl_2));
+    config_base.method, ...
+    config_base.suffix);
+path = sprintf('%s/%s', ...
+    config_advanced.up, ...
+    get_result_path(config_advanced));
 fn = sprintf('%s/%s.xlsx', ...
     path, ...
     suffix);
 
 [num,txt,raw] = xlsread(fn);
 
-if config_lvl_2.experiment == 1
+if config_advanced.exp_id == 1
     
-    if strcmp(config_lvl_1.method, 'linreg_ols')
+    if strcmp(config_base.method, 'linreg')
         
         names = raw(2:end, 1);
         area_intersection_rel = cell2mat(raw(2:end, 3));
@@ -30,9 +30,9 @@ if config_lvl_2.experiment == 1
         
     end
     
-elseif config_lvl_2.experiment == 2
+elseif config_advanced.exp_id == 2
     
-    if strcmp(config_lvl_1.method, 'linreg_ols')
+    if strcmp(config_base.method, 'linreg')
         
         names = raw(2:end, 1);
         slope_intersection = cell2mat(raw(2:end, 5));
@@ -48,9 +48,9 @@ elseif config_lvl_2.experiment == 2
         
     end
     
-elseif config_lvl_2.experiment == 3
+elseif config_advanced.exp_id == 3
     
-    if strcmp(config_lvl_1.method, 'linreg_ols')
+    if strcmp(config_base.method, 'linreg')
         
         names = raw(2:end, 1);
         area_intersection_rel = cell2mat(raw(2:end, 3));
@@ -67,9 +67,9 @@ elseif config_lvl_2.experiment == 3
         
     end
     
-elseif config_lvl_2.experiment == 4
+elseif config_advanced.exp_id == 4
     
-    if strcmp(config_lvl_1.method, 'linreg_ols')
+    if strcmp(config_base.method, 'linreg')
         
         names = raw(2:end, 1);
         area_intersection_rel = cell2mat(raw(2:end, 3));
@@ -85,9 +85,9 @@ elseif config_lvl_2.experiment == 4
         
     end
     
-elseif config_lvl_2.experiment == 5
+elseif config_advanced.exp_id == 5
     
-    if strcmp(config_lvl_1.method, 'linreg_ols')
+    if strcmp(config_base.method, 'linreg')
         
         names = raw(2:end, 1);
         area_intersection_rel = cell2mat(raw(2:end, 3));
@@ -109,9 +109,9 @@ elseif config_lvl_2.experiment == 5
         
     end
     
-elseif config_lvl_2.experiment == 6
+elseif config_advanced.exp_id == 6
     
-    if strcmp(config_lvl_1.method, 'linreg_variance_ols')
+    if strcmp(config_base.method, 'variance_linreg')
         names = raw(2:end, 1);
         slope_intersection = cell2mat(raw(2:end, 5));
         slope_intersection_var = cell2mat(raw(2:end, 9));
@@ -128,9 +128,9 @@ elseif config_lvl_2.experiment == 6
         passed_names = passed_names(1:num_names, :);
     end
     
-elseif config_lvl_2.experiment == 7
+elseif config_advanced.exp_id == 7
     
-    if strcmp(config_lvl_1.method, 'linreg_variance_ols')
+    if strcmp(config_base.method, 'variance_linreg')
         names = raw(2:end, 1);
         variance = cell2mat(raw(2:end, 4));
         slope_intersection = cell2mat(raw(2:end, 5));
