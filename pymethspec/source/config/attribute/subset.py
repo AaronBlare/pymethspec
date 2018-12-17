@@ -35,6 +35,16 @@ def get_indexes(config):
 
 
 def subset_attributes(config):
-    config.attribute_indexes = get_indexes(config)
     for key, values in config.attribute_dict.items():
-        values = list(map(int, list(np.array(values)[config.attribute_indexes])))
+        if str.isdigit(values[0]):
+            values = list(map(float, list(np.array(values)[config.attribute_indexes])))
+        else:
+            values = list(np.array(values)[config.attribute_indexes])
+
+
+def subset_cells(config):
+    for key, values in config.attribute_dict.items():
+        if str.isdigit(values[0]):
+            values = list(map(float, list(np.array(values)[config.attribute_indexes])))
+        else:
+            values = list(np.array(values)[config.attribute_indexes])

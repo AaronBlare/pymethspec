@@ -41,28 +41,6 @@ def load_top_data(config, num_top, index):
     return gene_names
 
 def load_top_dict(config, keys, fn='top.txt', num_top=1000000):
-    if fn.endswith('.txt'):
-        params_last_run_dict = load_top_params_last_run_dict(config)
-        if params_last_run_dict:
-            fn = get_top_fn(config.approach_method, params_last_run_dict)
-        fn = get_result_path(config, fn)
-        f = open(fn)
-        top_dict = {}
-        num_lines = 0
-        for line in f:
-            line = line.rstrip()
-            cols = line.split(' ')
-            for key_id in range(0, len(keys)):
-                key = keys[key_id]
-                if key not in top_dict:
-                    top_dict[key] = [cols[key_id]]
-                else:
-                    top_dict[key].append(cols[key_id])
-            num_lines += 1
-            if num_lines >= num_top:
-                print('Top contains more than ' + str(num_top))
-                break
-        return top_dict
     elif fn.endswith('.xlsx'):
         fn = get_result_path(config, fn)
         df = pd.read_excel(fn)
