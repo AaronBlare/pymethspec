@@ -1,5 +1,5 @@
 from source.infrastucture.path import *
-from source.annotation.conditions import *
+from source.config.annotation.conditions import *
 import os.path
 import pickle
 import numpy as np

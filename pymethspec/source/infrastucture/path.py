@@ -8,8 +8,14 @@ def get_cache_path(config):
     return get_data_base_path(config) + '/' + \
            DataType.cache.value
 
-def get_result_path(config):
-    return str(config.data) + '/' + \
+def get_table_path(config):
+
+    path = str(config.data) + '/' + \
            str(config.setup) + '/' + \
            str(config.annotation) + '/' + \
            str(config.attribute)
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    return path

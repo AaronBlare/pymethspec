@@ -6,12 +6,14 @@ class Attribute:
     def __init__(self,
                  name='attribute',
                  cells=Cells.any.value,
+                 cells_name='cells',
                  disease=Disease.any.value,
                  gender=Gender.any.value,
                  life_style=LifeStyle.any.value,
                  age=Age.any.value
                  ):
         self.name = name
+        self.cells_name = cells_name
         self.cells = cells
         self.disease = disease
         self.gender = gender
