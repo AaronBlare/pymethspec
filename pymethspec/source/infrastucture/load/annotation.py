@@ -5,7 +5,7 @@ import pickle
 
 
 def load_annotation_dict(config):
-    fn = get_data_base_path(config) + '/' + config.annotation.file_name
+    fn = get_data_base_path(config) + '/' + config.annotation.name
     fn_txt = fn + '.txt'
     fn_pkl = fn + '.pkl'
 

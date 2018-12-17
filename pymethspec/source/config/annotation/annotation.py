@@ -4,7 +4,8 @@ from source.config.annotation.types import *
 class Annotation:
 
     def __init__(self,
-                 file_name='annotation',
+                 name='annotation',
+                 exclude=Exclude.none.value,
                  cross_reactive=CrossReactive.any.value,
                  snp=SNP.any.value,
                  chr=Chromosome.any.value,
@@ -12,7 +13,8 @@ class Annotation:
                  geo=Geo.any.value,
                  probe_class=ProbeClass.any.value
                  ):
-        self.file_name = file_name
+        self.name = name
+        self.exclude = exclude
         self.cross_reactive = cross_reactive
         self.snp = snp
         self.chr = chr
@@ -21,7 +23,8 @@ class Annotation:
         self.probe_class = probe_class
 
     def __str__(self):
-        return 'CR(' + self.cross_reactive + ')' + '_' + \
+        return 'ex(' + self.exclude + ')' + '_' + \
+               'CR(' + self.cross_reactive + ')' + '_' + \
                'SNP(' + self.snp+ ')' + '_' + \
                'chr(' + self.chr + ')' + '_' + \
                'gene(' + self.gene_region + ')' + '_' + \

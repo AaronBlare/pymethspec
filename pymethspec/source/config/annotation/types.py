@@ -8,32 +8,32 @@ class AnnotationKey(Enum):
     Probe_SNPs = 'Probe_SNPs'
     Probe_SNPs_10 = 'Probe_SNPs_10'
     gene = 'UCSC_REFGENE_NAME'
-    class_type = 'Class'
+    probe_class = 'Class'
     geo = 'RELATION_TO_UCSC_CPG_ISLAND'
     bop = 'BOP'
     cross_reactive = 'CROSS_R'
 
 
+class Exclude(Enum):
+    none = 'none'
+    cluster = 'cluster'
+
+
 class CrossReactive(Enum):
     any = 'any'
-    include = 'include'
     exclude = 'exclude'
-    exclude_weak = 'exclude_weak'
 
 
 class SNP(Enum):
     any = 'any'
-    include = 'include'
     exclude = 'exclude'
-    exclude_weak = 'exclude_weak'
-    cluster = 'cluster'
 
 
 class Chromosome(Enum):
     any = 'any'
     non_gender = 'non_gender'
-    x = 'x'
-    y = 'y'
+    X = 'X'
+    Y = 'Y'
 
 
 class GeneRegion(Enum):
@@ -49,8 +49,6 @@ class Geo(Enum):
     shores_n = 'shores_n'
     islands = 'islands'
     islands_shores = 'islands_shores'
-    from_cpg = 'from_cpg'
-    from_bop = 'from_bop'
 
 
 class ProbeClass(Enum):
