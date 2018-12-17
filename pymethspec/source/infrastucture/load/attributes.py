@@ -33,7 +33,15 @@ def load_attribute_dict(config):
             for key_id in range(0, len(keys)):
                 key = keys[key_id]
                 if key in possible_keys:
-                    attribute_dict[key].append(values[key_id].rstrip())
+                    value = values[key_id].rstrip()
+                    if str.isdigit(value):
+                        value = float(value)
+                        if value.is_integer():
+                            attribute_dict[key].append(int(value))
+                        else:
+                            attribute_dict[key].append(float(value))
+                    else:
+                        attribute_dict[key].append(value)
         f.close()
 
         f = open(fn_pkl, 'wb')
@@ -69,7 +77,11 @@ def load_cells_dict(config):
             values = line.split('\t')
             for key_id in range(0, len(keys)):
                 key = keys[key_id]
-                cells_dict[key].append(values[key_id].rstrip())
+                value = values[key_id].rstrip()
+                if str.isdigit(value):
+                    cells_dict[key].append(float(value))
+                else:
+                    cells_dict[key].append(value)
         f.close()
 
         f = open(fn_pkl, 'wb')

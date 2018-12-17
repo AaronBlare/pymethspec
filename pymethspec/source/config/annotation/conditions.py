@@ -15,7 +15,7 @@ def cross_reactive_condition(config, annotation_dict):
 
     match = True
     if target == CrossReactive.exclude.value:
-        if value == 1:
+        if int(value) == 1:
             match = False
 
     return match
@@ -27,7 +27,7 @@ def snp_condition(config, annotation_dict):
     snp_10 = annotation_dict[AnnotationKey.Probe_SNPs_10.value]
 
     match = True
-    if target == SNP.excluded.value:
+    if target == SNP.exclude.value:
         if snp != '' or snp_10 != '':
             match = False
 

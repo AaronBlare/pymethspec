@@ -11,7 +11,7 @@ def get_line_list(line):
     return line_list
 
 
-def load_dict_cpg_data(config):
+def load_cpg_beta_dict(config):
     fn = get_data_base_path(config) + '/' + config.data.name
     fn_txt = fn + '.txt'
     fn_pkl = fn + '.pkl'
