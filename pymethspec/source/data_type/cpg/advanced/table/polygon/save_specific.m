@@ -1,20 +1,20 @@
-function save_specific(config_lvl_1, config_lvl_2)
+function save_specific(config_base, config_advanced)
 
 suffix = sprintf('method(%s%s)', ...
-    config_lvl_1.method, ...
-    config_lvl_1.suffix);
+    config_base.method, ...
+    config_base.suffix);
 path = sprintf('%s/%s', ...
-    config_lvl_1.up, ...
-    get_result_path(config_lvl_2));
+    config_base.up, ...
+    get_result_path(config_advanced));
 mkdir(path)
 fn = sprintf('%s/%s.xlsx', ...
     path, ...
     suffix);
 
-order = config_lvl_1.order;
-names = config_lvl_1.names;
-metrics_diff = config_lvl_1.metrics_diff;
-metrics_diff_labels = config_lvl_1.metrics_diff_labels;
+order = config_base.order;
+names = config_base.names;
+metrics_diff = config_base.metrics_diff;
+metrics_diff_labels = config_base.metrics_diff_labels;
 
 d = vertcat("names", string(names(order)));
 for metrics_id = 1:size(metrics_diff, 2)

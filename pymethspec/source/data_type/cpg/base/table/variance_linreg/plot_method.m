@@ -55,16 +55,16 @@ for cpg_id = 1:size(cpgs, 1)
     % ======== processing ========
     f = figure;
     if strcmp(config.gender, 'versus')
-        config.is_plot_regions = 0;
+        config.is_plot_regions = 1;
         config.gender = 'F';
         config.color = 'r';
-        plot_linreg_cpg(config, cpg)
+        plot_variance_linreg_cpg(config, cpg)
         config.gender = 'M';
         config.color = 'b';
-        plot_linreg_cpg(config, cpg)
+        plot_variance_linreg_cpg(config, cpg)
         config.gender = 'versus';
     else
-        plot_linreg_cpg(config, cpg)
+        plot_variance_linreg_cpg(config, cpg)
     end
    
     box on;
@@ -84,16 +84,16 @@ for cpg_id = 1:size(cpgs, 1)
     
     f = figure;
     if strcmp(config.gender, 'versus')
-        config.is_plot_regions = 1;
+        config.is_plot_regions = 0;
         config.gender = 'F';
         config.color = 'r';
-        plot_variance_linreg_cpg(config, cpg)
+        plot_variance_linreg_delta(config, cpg)
         config.gender = 'M';
         config.color = 'b';
-        plot_variance_linreg_cpg(config, cpg)
+        plot_variance_linreg_delta(config, cpg)
         config.gender = 'versus';
     else
-        plot_variance_linreg_cpg(config, cpg)
+        plot_variance_linreg_delta(config, cpg)
     end
     
     box on;
@@ -108,7 +108,7 @@ for cpg_id = 1:size(cpgs, 1)
     end
     title(sprintf('%s(%s)', cpg, genes), 'FontSize', 16)
     
-    savefig(f, sprintf('%s/%d_variance_linreg_diff_%s.fig', save_path, cpg_id, suffix))
-    saveas(f, sprintf('%s/%d_variance_linreg_diff_%s.png', save_path, cpg_id, suffix))
+    savefig(f, sprintf('%s/%d_variance_linreg_delta_%s.fig', save_path, cpg_id, suffix))
+    saveas(f, sprintf('%s/%d_variance_linreg_delta_%s.png', save_path, cpg_id, suffix))
     
 end

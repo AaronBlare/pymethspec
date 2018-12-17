@@ -1,18 +1,18 @@
-function specific(config_lvl_1, config_lvl_2)
+function specific(config_base, config_advanced)
 
-if strcmp(config_lvl_1.gender, 'any')
-    [config_lvl_1.names, config_lvl_1.data] = get_data(config_lvl_1);
-    save_data(config_lvl_1, config_lvl_2);
+if strcmp(config_base.gender, 'any')
+    [config_base.names, config_base.data] = get_data(config_base);
+    save_data(config_base, config_advanced);
 else
-    [config_lvl_1.names, config_lvl_1.data_1, config_lvl_1.data_2] = get_specific_data(config_lvl_1);
-    [config_lvl_1.metrics_1, config_lvl_1.metrics_2] = get_specific_metrics(config_lvl_1);
-    [config_lvl_1.metrics_diff, config_lvl_1.metrics_diff_labels] = get_specific_polygons(config_lvl_1);
+    [config_base.names, config_base.data_1, config_base.data_2] = get_specific_data(config_base);
+    [config_base.metrics_1, config_base.metrics_2] = get_specific_metrics(config_base);
+    [config_base.metrics_diff, config_base.metrics_diff_labels] = get_specific_polygons(config_base);
     
-    num_names = size(config_lvl_1.names, 1)
+    num_names = size(config_base.names, 1)
     
-    config_lvl_1.order = get_specific_order(config_lvl_1);
+    config_base.order = get_specific_order(config_base);
     
-    save_specific(config_lvl_1, config_lvl_2);
+    save_specific(config_base, config_advanced);
 end
 
 end

@@ -1,67 +1,67 @@
 clear all;
 
 % ======== params ========
-config_lvl_1.metrics_rank = 1;
-config_lvl_1.plot_method = 1;
-config_lvl_1.metrics_diff_id = 2;
-config_lvl_1.metrics_diff_direction = 'ascend';
-config_lvl_1.part = 0.0005;
+config_base.metrics_rank = 1;
+config_base.plot_method = 1;
+config_base.metrics_diff_id = 2;
+config_base.metrics_diff_direction = 'ascend';
+config_base.part = 0.0005;
 
 % ======== config ========
-config_lvl_1.data_base = 'GSE87571';
-config_lvl_1.data_type = 'cpg';
+config_base.data_base = 'GSE87571';
+config_base.data_type = 'cpg';
 
-config_lvl_1.lvl_1_experiment = 'base';
-config_lvl_1.lvl_1_task = 'table';
-config_lvl_1.lvl_1_method = 'variance_linreg';
+config_base.experiment = 'base';
+config_base.task = 'table';
+config_base.method = 'variance_linreg';
 
-config_lvl_1.exclude = 'cluster';
-config_lvl_1.cross_reactive = 'exclude';
-config_lvl_1.snp = 'exclude';
-config_lvl_1.chr = 'non_gender';
-config_lvl_1.gene_region = 'yes';
-config_lvl_1.geo = 'any';
-config_lvl_1.probe_class = 'any';
+config_base.exclude = 'cluster';
+config_base.cross_reactive = 'exclude';
+config_base.snp = 'exclude';
+config_base.chr = 'non_gender';
+config_base.gene_region = 'yes';
+config_base.geo = 'any';
+config_base.probe_class = 'any';
 
-config_lvl_1.cells = 'none';
-config_lvl_1.disease = 'any';
-config_lvl_1.gender = 'versus';
-config_lvl_1.life_style = 'any';
-config_lvl_1.age = 'any';
+config_base.cells = 'none';
+config_base.disease = 'any';
+config_base.gender = 'versus';
+config_base.life_style = 'any';
+config_base.age = 'any';
 
-config_lvl_1.suffix = '';
+config_base.suffix = '';
 
-config_lvl_1.is_clustering = 0;
+config_base.is_clustering = 0;
 
-config_lvl_1.up = get_up_data_path(); 
+config_base.up = get_up_data_path(); 
 
 % ======== save_config ========
-config_lvl_2.data_base = config_lvl_1.data_base;
-config_lvl_2.data_type = config_lvl_1.data_type;
+config_advanced.data_base = config_base.data_base;
+config_advanced.data_type = config_base.data_type;
 
-config_lvl_2.experiment = 'advanced';
-config_lvl_2.task = 'table';
-config_lvl_2.method = 'polygon';
+config_advanced.experiment = 'advanced';
+config_advanced.task = 'table';
+config_advanced.method = 'polygon';
 
-config_lvl_2.exclude = config_lvl_1.exclude;
-config_lvl_2.cross_reactive = config_lvl_1.cross_reactive;
-config_lvl_2.snp = config_lvl_1.snp;
-config_lvl_2.chr = config_lvl_1.chr;
-config_lvl_2.gene_region = config_lvl_1.gene_region;
-config_lvl_2.geo = config_lvl_1.geo;
-config_lvl_2.probe_class = config_lvl_1.probe_class;
+config_advanced.exclude = config_base.exclude;
+config_advanced.cross_reactive = config_base.cross_reactive;
+config_advanced.snp = config_base.snp;
+config_advanced.chr = config_base.chr;
+config_advanced.gene_region = config_base.gene_region;
+config_advanced.geo = config_base.geo;
+config_advanced.probe_class = config_base.probe_class;
 
-config_lvl_2.cells = config_lvl_1.cells;
-config_lvl_2.disease = config_lvl_1.disease;
-config_lvl_2.gender = 'versus';
-config_lvl_2.life_style = config_lvl_1.life_style;
-config_lvl_2.age = config_lvl_1.age;
+config_advanced.cells = config_base.cells;
+config_advanced.disease = config_base.disease;
+config_advanced.gender = 'versus';
+config_advanced.life_style = config_base.life_style;
+config_advanced.age = config_base.age;
 
-config_lvl_2.suffix = config_lvl_1.suffix;
+config_advanced.suffix = config_base.suffix;
 
-config_lvl_2.is_clustering = config_lvl_1.is_clustering;
+config_advanced.is_clustering = config_base.is_clustering;
 
-config_lvl_2.up = get_up_figures_path(); 
+config_advanced.up = get_up_figures_path(); 
 
 % ======== processing ========
-specific(config_lvl_1, config_lvl_2);
+specific(config_base, config_advanced);
