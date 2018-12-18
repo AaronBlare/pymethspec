@@ -14,16 +14,16 @@ config.task = 'table';
 config.method = 'linreg';
 
 config.exclude = 'cluster';
-config.cross_reactive = 'exclude';
-config.snp = 'exclude';
-config.chr = 'non_gender';
+config.cross_reactive = 'ex';
+config.snp = 'ex';
+config.chr = 'NG';
 config.gene_region = 'yes';
 config.geo = 'any';
 config.probe_class = 'any';
 
 config.cells = 'none';
 config.disease = 'any';
-config.gender = 'versus';
+config.gender = 'vs';
 config.life_style = 'any';
 config.age = 'any';
 
@@ -56,7 +56,7 @@ for cpg_id = 1:size(cpgs, 1)
         config.gender = 'M';
         config.color = 'b';
         plot_linreg_cpg(config, cpg)
-        config.gender = 'versus';
+        config.gender = 'vs';
     else
         plot_linreg_cpg(config, cpg)
     end

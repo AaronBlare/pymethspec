@@ -1,5 +1,5 @@
 function [passed_names, metrics_labels, metrics_map] = base_condition(config)
-if strcmp(config.gender, 'versus')
+if strcmp(config.gender, 'vs')
     [names, data_1, data_2] = get_specific_data(config);
     
     if config.exp_id == 1
@@ -21,7 +21,7 @@ if strcmp(config.gender, 'versus')
                 end
             end
             
-        elseif strcmp(config.method, 'anova_statsmodels')
+        elseif strcmp(config.method, 'anova')
             
             p_vals_1 = data_1(:, 1);
             p_vals_2 = data_2(:, 1);
