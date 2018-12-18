@@ -3,10 +3,10 @@ import getpass
 
 
 class DataPath(Enum):
-    local_1 = 'D:/YandexDisk/Work/pymethspec/data'
-    local_2 = 'E:/YandexDisk/Work/pymethspec/data'
-    local_3 = 'C:/Users/User/YandexDisk/pymethspec/data'
-    cluster = '/common/home/' + getpass.getuser() + '/Work/pymethspec/data'
+    local_1 = 'D:/YandexDisk/Work/pymethspec'
+    local_2 = 'E:/YandexDisk/Work/pymethspec'
+    local_3 = 'C:/Users/User/YandexDisk/pymethspec'
+    cluster = '/common/home/' + getpass.getuser() + '/Work/data/pymethspec'
 
 
 class DataBase(Enum):

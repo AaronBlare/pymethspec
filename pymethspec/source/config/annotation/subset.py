@@ -98,7 +98,7 @@ def subset_annotations(config):
                 config.cpg_bop_dict[cpg] = bop
 
                 for gene in curr_genes:
-                    if gene in config.ene_cpg_dict:
+                    if gene in config.gene_cpg_dict:
                         config.gene_cpg_dict[gene].append(cpg)
                     else:
                         config.gene_cpg_dict[gene] = [cpg]
@@ -122,7 +122,7 @@ def subset_annotations(config):
             curr_map_infos = []
             for curr_cpg in curr_cpgs:
                 cpg_index = cpgs.index(curr_cpg)
-                curr_map_infos.append(map_infos[cpg_index])
+                curr_map_infos.append(int(map_infos[cpg_index]))
             order = np.argsort(curr_map_infos)
             curr_cpgs_sorted = list(np.array(curr_cpgs)[order])
             config.gene_cpg_dict[curr_gene] = curr_cpgs_sorted
@@ -132,7 +132,7 @@ def subset_annotations(config):
             curr_map_infos = []
             for curr_cpg in curr_cpgs:
                 cpg_index = cpgs.index(curr_cpg)
-                curr_map_infos.append(map_infos[cpg_index])
+                curr_map_infos.append(int(map_infos[cpg_index]))
             order = np.argsort(curr_map_infos)
             curr_cpgs_sorted = list(np.array(curr_cpgs)[order])
             config.bop_cpg_dict[curr_bop] = curr_cpgs_sorted

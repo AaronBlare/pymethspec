@@ -36,9 +36,8 @@ class Config:
         self.annotation_dict = load_annotation_dict(self)
         subset_annotations(self)
 
-        self.attribute_indexes = get_indexes(self)
-
         self.attribute_dict = load_attribute_dict(self)
+        self.attribute_indexes = get_indexes(self)
         subset_attributes(self)
         self.cells_dict = load_cells_dict(self)
         subset_cells(self)

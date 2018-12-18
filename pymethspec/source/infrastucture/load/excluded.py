@@ -1,4 +1,5 @@
 from source.infrastucture.path import *
+from source.config.annotation.types import *
 import os.path
 import pickle
 
@@ -6,7 +7,7 @@ import pickle
 def load_excluded(config):
     exclude = []
 
-    if config.annotation.exclude != '':
+    if config.annotation.exclude != Exclude.none.value:
         fn = get_data_base_path(config) + '/' + config.annotation.exclude
         fn_txt = fn + '.txt'
         fn_pkl = fn + '.pkl'
