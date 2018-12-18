@@ -5,13 +5,11 @@ import statsmodels.api as sm
 
 def generate_table_linreg(config):
     attribute_dict = config.attribute_dict
-    cpg_gene_dict = config.cpg_gene_dict
     cpg_beta_dict = load_cpg_beta_dict(config)
     cpg_list = config.cpg_list
 
     target = attribute_dict[config.target]
 
-    print('len(cpg_gene_dict): ' + str(len(cpg_gene_dict)))
     print('len(cpg_list): ' + str(len(cpg_list)))
 
     if not bool(config.setup.params):
