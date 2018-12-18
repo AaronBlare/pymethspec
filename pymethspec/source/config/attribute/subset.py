@@ -17,19 +17,11 @@ def get_attribute_indexes(config, target, variable, common):
 def get_indexes(config):
     indexes = list(range(0, len(list(config.attribute_dict.values())[0])))
 
-    variable = config.attribute.gender
-    target = AttributeKey.gender.value
-    common = Gender.any.value
-    if target in config.attribute_dict:
-        passed_indexes = get_attribute_indexes(config, target, variable, common)
-        indexes = list(set(indexes).intersection(passed_indexes))
-
-    variable = config.attribute.disease
-    target = AttributeKey.disease.value
-    common = Disease.any.value
-    if target in config.attribute_dict:
-        passed_indexes = get_attribute_indexes(config, target, variable, common)
-        indexes = list(set(indexes).intersection(passed_indexes))
+    for obs, value in config.attribute.obs.items():
+        common = 'any'
+        if obs in config.attribute_dict:
+            passed_indexes = get_attribute_indexes(config, obs, value, common)
+            indexes = list(set(indexes).intersection(passed_indexes))
 
     indexes.sort()
 

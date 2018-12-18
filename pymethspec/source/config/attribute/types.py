@@ -43,7 +43,9 @@ class Gender(Enum):
 
 class LifeStyle(Enum):
     any = 'any'
+    smoking = 'smoking'
 
 
 class Age(Enum):
     any = 'any'
+    old = 'old'

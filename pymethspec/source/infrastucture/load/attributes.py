@@ -17,7 +17,7 @@ def load_attribute_dict(config):
 
     else:
 
-        possible_keys = [x.value for x in AttributeKey]
+        possible_keys = [config.target] + list(config.attribute.obs.keys())
         f = open(fn_txt)
         key_line = f.readline()
         keys = key_line.split(' ')

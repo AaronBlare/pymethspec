@@ -38,18 +38,19 @@ annotation = Annotation(
 )
 
 attribute = Attribute(
+    obs={AttributeKey.gender.value:Gender.any.value},
     name='attribute',
     cells=Cells.none.value,
     cells_name='cells',
-    disease=Disease.any.value,
-    gender=Gender.F.value,
-    life_style=LifeStyle.any.value,
-    age=Age.any.value
 )
-genders = [Gender.any.value, Gender.F.value, Gender.M.value]
+obs_list = [
+    {AttributeKey.gender.value: Gender.F.value},
+    {AttributeKey.gender.value: Gender.M.value},
+    {AttributeKey.gender.value: Gender.any.value}
+]
 
-for gender in genders:
-    attribute.gender = gender
+for obs in obs_list:
+    attribute.obs = obs
 
     config = Config(
         data=data,
