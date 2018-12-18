@@ -30,15 +30,15 @@ class Cells(Enum):
 class Disease(Enum):
     any = 'any'
     healthy = 'healthy'
-    down_syndrome = 'down_syndrome'
-    versus = 'versus'
+    down = 'down'
+    vs = 'vs'
 
 
 class Gender(Enum):
     any = 'any'
     M = 'M'
     F = 'F'
-    versus = 'versus'
+    vs = 'vs'
 
 
 class LifeStyle(Enum):

@@ -22,9 +22,8 @@ class Setup:
         self.suffix = suffix
 
     def __str__(self):
-        return self.experiment.value + '/' + \
-               self.task.value + '/' + \
-               self.method.value + '/'
+        path = self.experiment.value + '/' + self.task.value + '/' + self.method.value
+        return path
 
     def get_file_name(self):
         fn = ''

@@ -48,7 +48,7 @@ def load_cpg_beta_dict(config):
         f.close()
 
     for cpg, betas in cpg_beta_dict.items():
-        cpg_beta_dict[cpg] = list(np.array(betas)[config.indexes])
+        cpg_beta_dict[cpg] = list(np.array(betas)[config.attribute_indexes])
 
     return cpg_beta_dict
 

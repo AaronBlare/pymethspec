@@ -12,3 +12,11 @@ def convert_attributes_to_num(attributes, target):
         return converted
     else:
         return attributes
+
+
+def is_float(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
