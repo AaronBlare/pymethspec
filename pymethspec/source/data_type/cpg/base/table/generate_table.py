@@ -4,11 +4,17 @@ from source.config.annotation.annotation import *
 from source.config.attribute.attribute import *
 from source.config.config import *
 from source.data_type.cpg.base.table.linreg.processing import *
+from source.data_type.cpg.base.table.cluster.processing import *
+from source.data_type.cpg.base.table.variance_linreg.processing import *
 
 
 def generate_table(config):
     if config.setup.method == Method.linreg:
         generate_table_linreg(config)
+    elif config.setup.method == Method.cluster:
+        generate_table_cluster(config)
+    elif config.setup.method == Method.variance_linreg:
+        generate_table_variance_linreg(config)
 
 
 data = Data(
@@ -21,7 +27,7 @@ data = Data(
 setup = Setup(
     experiment=Experiment.base,
     task=Task.table,
-    method=Method.linreg,
+    method=Method.cluster,
     params={},
     suffix='',
 )

@@ -13,9 +13,10 @@ def generate_table_linreg(config):
     print('len(cpg_list): ' + str(len(cpg_list)))
 
     if not bool(config.setup.params):
-        config.setup.params = {}
-        config.setup.params['out_limit'] = 0.0
-        config.setup.params['out_sigma'] = 0.0
+        config.setup.params = {
+            'out_limit': 0.0,
+            'out_sigma': 0.0
+        }
 
     cpg_names_passed = []
     R2s = []
@@ -41,6 +42,7 @@ def generate_table_linreg(config):
             results = sm.OLS(betas, x).fit()
 
             if np.isclose(config.setup.params['out_limit'], 0.0):
+
                 cpg_names_passed.append(cpg)
                 R2s.append(results.rsquared)
                 intercepts.append(results.params[0])
@@ -49,8 +51,11 @@ def generate_table_linreg(config):
                 slopes_std_errors.append(results.bse[1])
                 intercepts_p_values.append(results.pvalues[0])
                 slopes_p_values.append(results.pvalues[1])
+
                 num_passed += 1
+
             else:
+
                 slope_plus = results.params[1] + config.setup.params['out_sigma'] * results.bse[1]
                 intercept_plus = results.params[0] + config.setup.params['out_sigma'] * results.bse[0]
 
@@ -83,9 +88,8 @@ def generate_table_linreg(config):
                     slopes_std_errors.append(results.bse[1])
                     intercepts_p_values.append(results.pvalues[0])
                     slopes_p_values.append(results.pvalues[1])
+
                     num_passed += 1
-
-
 
     order = np.argsort(list(map(abs, R2s)))[::-1]
     cpgs_sorted = list(np.array(cpg_names_passed)[order])
