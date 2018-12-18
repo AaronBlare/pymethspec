@@ -80,6 +80,10 @@ def subset_annotations(config):
         bops = config.annotation_dict[AnnotationKey.bop.value]
         map_infos = config.annotation_dict[AnnotationKey.map_info.value]
         for id in range(0, len(cpgs)):
+
+            if id % 10000 == 0:
+                print('id: ' + str(id))
+
             curr_ann_dict = {}
             for key in config.annotation_dict:
                 curr_ann_dict[key] = config.annotation_dict[key][id]

@@ -5,7 +5,7 @@ import numpy as np
 def get_attribute_indexes(config, target, variable, common):
     passed_indexes = []
     attributes = config.attribute_dict[target]
-    if config.attribute.disease != common:
+    if variable == common:
         passed_indexes = list(range(0, len(attributes)))
     else:
         for index in range(0, len(attributes)):
@@ -37,10 +37,12 @@ def get_indexes(config):
 
 
 def subset_attributes(config):
-    for key, values in config.attribute_dict.items():
-        values = list(np.array(values)[config.attribute_indexes])
+    for key in config.attribute_dict:
+        values = config.attribute_dict[key]
+        config.attribute_dict[key] = list(np.array(values)[config.attribute_indexes])
 
 
 def subset_cells(config):
-    for key, values in config.attribute_dict.items():
-        values = list(np.array(values)[config.attribute_indexes])
+    for key in config.cells_dict:
+        values = config.cells_dict[key]
+        config.cells_dict[key] = list(np.array(values)[config.attribute_indexes])

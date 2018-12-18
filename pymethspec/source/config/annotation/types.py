@@ -21,17 +21,17 @@ class Exclude(Enum):
 
 class CrossReactive(Enum):
     any = 'any'
-    exclude = 'exclude'
+    exclude = 'ex'
 
 
 class SNP(Enum):
     any = 'any'
-    exclude = 'exclude'
+    exclude = 'ex'
 
 
 class Chromosome(Enum):
     any = 'any'
-    non_gender = 'non_gender'
+    non_gender = 'NG'
     X = 'X'
     Y = 'Y'
 
@@ -53,8 +53,8 @@ class Geo(Enum):
 
 class ProbeClass(Enum):
     any = 'any'
-    class_a = 'ClassA'
-    class_b = 'ClassB'
-    class_c = 'ClassC'
-    class_d = 'ClassD'
-    class_ab = 'ClassAB'
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    AB = 'AB'

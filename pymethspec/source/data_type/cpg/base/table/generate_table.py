@@ -19,9 +19,9 @@ data = Data(
 )
 
 setup = Setup(
-    experiment=Experiment.base.value,
-    task=Task.table.value,
-    method=Method.linreg.value,
+    experiment=Experiment.base,
+    task=Task.table,
+    method=Method.linreg,
     params={},
     suffix='',
 )
@@ -46,13 +46,17 @@ attribute = Attribute(
     life_style=LifeStyle.any.value,
     age=Age.any.value
 )
+genders = [Gender.any.value, Gender.F.value, Gender.M.value]
 
-config = Config(
-    data=data,
-    setup=setup,
-    annotation=annotation,
-    attribute=attribute,
-    target=AttributeKey.age.value
-)
+for gender in genders:
+    attribute.gender = gender
 
-generate_table(config)
+    config = Config(
+        data=data,
+        setup=setup,
+        annotation=annotation,
+        attribute=attribute,
+        target=AttributeKey.age.value
+    )
+
+    generate_table(config)

@@ -14,10 +14,10 @@ def generate_table_linreg(config):
     print('len(cpg_gene_dict): ' + str(len(cpg_gene_dict)))
     print('len(cpg_list): ' + str(len(cpg_list)))
 
-    if config.setup.params is None:
+    if not bool(config.setup.params):
         config.setup.params = {}
-        config.setup.params['outliers_limit'] = 0.0
-        config.setup.params['outliers_sigma'] = 0.0
+        config.setup.params['out_limit'] = 0.0
+        config.setup.params['out_sigma'] = 0.0
 
     cpg_names_passed = []
     R2s = []
@@ -34,12 +34,15 @@ def generate_table_linreg(config):
 
         if cpg in cpg_beta_dict:
 
+            if num_passed % 10000 == 0:
+                print('cpg_id: ' + str(num_passed))
+
             betas = cpg_beta_dict[cpg]
 
             x = sm.add_constant(target)
             results = sm.OLS(betas, x).fit()
 
-            if np.isclose(config.method_params['outliers_limit'], 0.0):
+            if np.isclose(config.setup.params['out_limit'], 0.0):
                 cpg_names_passed.append(cpg)
                 R2s.append(results.rsquared)
                 intercepts.append(results.params[0])
@@ -50,8 +53,8 @@ def generate_table_linreg(config):
                 slopes_p_values.append(results.pvalues[1])
                 num_passed += 1
             else:
-                slope_plus = results.params[1] + config.method_params['outliers_sigma'] * results.bse[1]
-                intercept_plus = results.params[0] + config.method_params['outliers_sigma'] * results.bse[0]
+                slope_plus = results.params[1] + config.setup.params['out_sigma'] * results.bse[1]
+                intercept_plus = results.params[0] + config.setup.params['out_sigma'] * results.bse[0]
 
                 slope = results.params[1]
                 intercept = results.params[0]
@@ -66,7 +69,7 @@ def generate_table_linreg(config):
                     if abs(pred_y - curr_y) < max_diff:
                         passed_ids.append(p_id)
 
-                if len(passed_ids) > np.floor(len(betas) * config.method_params['outliers_limit']):
+                if len(passed_ids) > np.floor(len(betas) * config.setup.params['out_limit']):
 
                     values_good = list(np.array(betas)[passed_ids])
                     attributes_good = list(np.array(target)[passed_ids])
@@ -84,8 +87,7 @@ def generate_table_linreg(config):
                     slopes_p_values.append(results.pvalues[1])
                     num_passed += 1
 
-        if num_passed % config.print_rate == 0:
-            print('cpg_id: ' + str(num_passed))
+
 
     order = np.argsort(list(map(abs, R2s)))[::-1]
     cpgs_sorted = list(np.array(cpg_names_passed)[order])

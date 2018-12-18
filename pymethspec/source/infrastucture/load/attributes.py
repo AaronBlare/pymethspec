@@ -1,5 +1,5 @@
 from source.infrastucture.path import *
-from source.config.attribute.types import *
+from source.config.attribute.auxiliary import *
 import os.path
 import pickle
 
@@ -34,7 +34,7 @@ def load_attribute_dict(config):
                 key = keys[key_id]
                 if key in possible_keys:
                     value = values[key_id].rstrip()
-                    if str.isdigit(value):
+                    if is_float(value):
                         value = float(value)
                         if value.is_integer():
                             attribute_dict[key].append(int(value))
@@ -64,21 +64,22 @@ def load_cells_dict(config):
 
     else:
 
+        # First column is always sample name
         f = open(fn_txt)
         key_line = f.readline()
         keys = key_line.split('\t')
-        keys = [x.rstrip() for x in keys]
+        keys = [x.rstrip() for x in keys][1::]
 
         cells_dict = {}
         for key in keys:
             cells_dict[key] = []
 
         for line in f:
-            values = line.split('\t')
+            values = line.split('\t')[1::]
             for key_id in range(0, len(keys)):
                 key = keys[key_id]
                 value = values[key_id].rstrip()
-                if str.isdigit(value):
+                if is_float(value):
                     cells_dict[key].append(float(value))
                 else:
                     cells_dict[key].append(value)

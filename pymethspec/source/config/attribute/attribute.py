@@ -22,7 +22,7 @@ class Attribute:
 
     def __str__(self):
         return 'cells(' + self.cells + ')' + '_' + \
-               'disease(' + self.disease + ')' + '_' + \
+               'dis(' + self.disease + ')' + '_' + \
                'gender(' + self.gender + ')' + '_' + \
                'LS(' + self.life_style + ')' + '_' + \
                'age(' + self.age + ')'

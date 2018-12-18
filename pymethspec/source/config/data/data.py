@@ -32,10 +32,9 @@ class Data:
                 self.path = DataPath.cluster.value
 
     def __str__(self):
-        return self.path + '/' + \
-               self.base + '/' + \
-               self.type.value
+        path = self.path + '/' + self.base + '/' + self.type.value
+        return path
 
     def get_data_base_path(self):
-        return self.path + '/' + \
-               self.base
+        path = self.path + '/' + self.base
+        return path

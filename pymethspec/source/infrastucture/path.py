@@ -8,7 +8,8 @@ def get_data_base_path(config):
 
 def get_cache_path(config):
     path = get_data_base_path(config) + '/' + \
-           DataType.cache.value
+           DataType.cache.value + '/' + \
+           str(config.annotation)
 
     if not os.path.exists(path):
         os.makedirs(path)
