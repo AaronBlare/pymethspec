@@ -6,12 +6,7 @@ config.data_type = 'attributes';
 config.color = '';
 config.edge_alpha = 0.5;
 
-if strcmp(getenv('computername'), 'MSI')
-    config.up = 'D:/YandexDisk/Work/pymethspec/data';
-else
-    config.up = 'E:/YandexDisk/Work/pymethspec/data';
-end
-
+config.up = get_up_data_path();
 
 % ======== processing ========
 f = figure;
@@ -35,13 +30,7 @@ box on;
 legend('-DynamicLegend');
 propertyeditor('on');
 
-if strcmp(getenv('computername'), 'MSI') 
-    up_save = 'C:/Users/user/Google Drive/pymethspec/figures'; 
-elseif strcmp(getenv('computername'), 'DESKTOP-4BEQ7MS') 
-    up_save = 'D:/Aaron/Bio/pymethspec/figures'; 
-else 
-    up_save = 'C:/Users/user/Google Drive/pymethspec/figures'; 
-end 
+up_save = get_up_figure_path();
 
 save_path = sprintf('%s/%s', ...
     up_save, ...
