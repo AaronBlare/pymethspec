@@ -6,16 +6,16 @@ data_base = 'GSE87571';
 data_type = 'cpg';
 
 exclude = 'cluster';
-cross_reactive = 'exclude';
-snp = 'exclude';
-chr = 'non_gender';
+cross_reactive = 'ex';
+snp = 'ex';
+chr = 'NG';
 gene_region = 'yes';
 geo = 'any';
 probe_class = 'any';
 
 cells = 'none';
 disease = 'any';
-gender = 'versus';
+gender = 'vs';
 life_style = 'any';
 age = 'any';
 
@@ -88,14 +88,14 @@ config_lvl_2.suffix = lvl_2_suffix;
 
 % ======== processing ========
 f = figure;
-if strcmp(config_lvl_2.gender, 'versus')
+if strcmp(config_lvl_2.gender, 'vs')
     config_lvl_2.gender = 'F';
     config_lvl_2.color = 'r';
     plot_clock_metrics(config_lvl_1, config_lvl_2, metric)
     config_lvl_2.gender = 'M';
     config_lvl_2.color = 'b';
     plot_clock_metrics(config_lvl_1, config_lvl_2, metric)
-    config_lvl_2.gender = 'versus';
+    config_lvl_2.gender = 'vs';
 else
     config_lvl_2.color = 'g';
     plot_clock_metrics(config_lvl_1, config_lvl_2, metric)

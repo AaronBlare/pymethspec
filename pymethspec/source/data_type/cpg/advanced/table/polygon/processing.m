@@ -16,16 +16,16 @@ config_base.task = 'table';
 config_base.method = 'variance_linreg';
 
 config_base.exclude = 'cluster';
-config_base.cross_reactive = 'exclude';
-config_base.snp = 'exclude';
-config_base.chr = 'non_gender';
+config_base.cross_reactive = 'ex';
+config_base.snp = 'ex';
+config_base.chr = 'NG';
 config_base.gene_region = 'yes';
 config_base.geo = 'any';
 config_base.probe_class = 'any';
 
 config_base.cells = 'none';
 config_base.disease = 'any';
-config_base.gender = 'versus';
+config_base.gender = 'vs';
 config_base.life_style = 'any';
 config_base.age = 'any';
 
@@ -53,7 +53,7 @@ config_advanced.probe_class = config_base.probe_class;
 
 config_advanced.cells = config_base.cells;
 config_advanced.disease = config_base.disease;
-config_advanced.gender = 'versus';
+config_advanced.gender = 'vs';
 config_advanced.life_style = config_base.life_style;
 config_advanced.age = config_base.age;
 

@@ -12,16 +12,16 @@ base_task = 'table';
 base_methods = ['variance_linreg'];
 
 base_exclude = 'cluster';
-base_cross_reactive = 'exclude';
-base_snp = 'exclude';
-base_chr = 'non_gender';
+base_cross_reactive = 'ex';
+base_snp = 'ex';
+base_chr = 'NG';
 base_gene_region = 'yes';
 base_geo = 'any';
 base_probe_class = 'any';
 
 base_cells = 'none';
 base_disease = 'any';
-base_genders = ['versus'];
+base_genders = ['vs'];
 base_life_style = 'any';
 base_age = 'any';
 
@@ -33,16 +33,16 @@ advanced_task = 'table';
 advanced_methods = ['polygon'];
 
 advanced_exclude = 'cluster';
-advanced_cross_reactive = 'exclude';
-advanced_snp = 'exclude';
-advanced_chr = 'non_gender';
+advanced_cross_reactive = 'ex';
+advanced_snp = 'ex';
+advanced_chr = 'NG';
 advanced_gene_region = 'yes';
 advanced_geo = 'any';
 advanced_probe_class = 'any';
 
 advanced_cells = 'none';
 advanced_disease = 'any';
-advanced_genders = ['versus'];
+advanced_genders = ['vs'];
 advanced_life_style = 'any';
 advanced_age = 'any';
 
