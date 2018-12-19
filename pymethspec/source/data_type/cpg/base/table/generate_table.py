@@ -21,7 +21,7 @@ data = Data(
     name='cpg_beta',
     type=DataType.cpg,
     path='',
-    base=DataBase.GSE40279.value
+    base=DataBase.GSE87571.value
 )
 
 setup = Setup(
@@ -34,7 +34,7 @@ setup = Setup(
 
 annotation = Annotation(
     name='annotation',
-    exclude=Exclude.none.value,
+    exclude=Exclude.cluster.value,
     cross_reactive=CrossReactive.exclude.value,
     snp=SNP.exclude.value,
     chr=Chromosome.non_gender.value,
