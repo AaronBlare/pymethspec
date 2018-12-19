@@ -12,12 +12,6 @@ def generate_table_variance_linreg(config):
 
     print('len(cpg_list): ' + str(len(cpg_list)))
 
-    if not bool(config.setup.params):
-        config.setup.params = {
-            'out_limit': 0.0,
-            'out_sigma': 0.0
-        }
-
     cpg_names_passed = []
 
     R2s = []
