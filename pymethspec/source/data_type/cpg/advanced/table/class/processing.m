@@ -1,6 +1,6 @@
 clear all;
 
-num_base_exps = 1;
+num_base_exps = 2;
 num_advanced_exps = 1;
 target_base_exp = 1;
 
@@ -9,9 +9,9 @@ data_type = 'cpg';
 
 base_experiment = 'base';
 base_task = 'table';
-base_methods = ['variance_linreg'];
+base_methods = ["linreg", "linreg"];
 
-base_exclude = 'cluster';
+base_exclude = 'none';
 base_cross_reactive = 'ex';
 base_snp = 'ex';
 base_chr = 'NG';
@@ -20,19 +20,35 @@ base_geo = 'any';
 base_probe_class = 'any';
 
 base_cells = 'none';
-base_disease = 'any';
-base_genders = ['vs'];
-base_life_style = 'any';
-base_age = 'any';
 
-base_suffixes = [''];
-base_exps_ids = [7];
+base_obs = containers.Map();
+base_obs('gender') = ["vs", "any"];
+
+base_obs_keys = base_obs.keys;
+
+base_params = containers.Map();
+base_params('out_limit') = ["0.0"];
+base_params('out_sigma') = ["0.0"];
+
+if isempty(base_params)
+    base_name = 'default';
+else
+    base_params_keys = sort(base_params.keys);
+    base_name = strcat(base_params_keys{1, 1}, '(', base_params(base_params_keys{1, 1}), ')');
+    if size(base_params_keys, 2) > 1
+        for params_id = 2:size(base_params_keys, 2)
+            base_name = strcat(base_name, '_', base_params_keys{1, params_id}, '(', base_params(base_params_keys{1, params_id}), ')');
+        end
+    end
+end
+
+base_exps_ids = [3, 3];
 
 advanced_experiment = 'advanced';
 advanced_task = 'table';
-advanced_methods = ['polygon'];
+advanced_methods = ["polygon"];
 
-advanced_exclude = 'cluster';
+advanced_exclude = 'none';
 advanced_cross_reactive = 'ex';
 advanced_snp = 'ex';
 advanced_chr = 'NG';
@@ -41,13 +57,28 @@ advanced_geo = 'any';
 advanced_probe_class = 'any';
 
 advanced_cells = 'none';
-advanced_disease = 'any';
-advanced_genders = ['vs'];
-advanced_life_style = 'any';
-advanced_age = 'any';
 
-advanced_suffixes = [''];
-advanced_exps_ids = [7];
+advanced_obs = containers.Map();
+advanced_obs('gender') = ["vs"];
+
+advanced_obs_keys = advanced_obs.keys;
+
+advanced_params = containers.Map();
+advanced_params('sigma') = ["3"];
+
+if isempty(advanced_params)
+    advanced_name = 'default';
+else
+    advanced_params_keys = sort(advanced_params.keys);
+    advanced_name = strcat(advanced_params_keys{1, 1}, '(', advanced_params(advanced_params_keys{1, 1}), ')');
+    if size(advanced_params_keys, 2) > 1
+        for params_id = 2:size(advanced_params_keys, 2)
+            advanced_name = strcat(advanced_name, '_', advanced_params_keys{1, params_id}, '(', advanced_params(advanced_params_keys{1, params_id}), ')');
+        end
+    end
+end
+
+advanced_exps_ids = [3];
 
 all_metrics_labels = [];
 intersection_names = [];
@@ -74,12 +105,17 @@ for base_exp_id = 1:num_base_exps
     config_base.probe_class = base_probe_class;
     
     config_base.cells = base_cells;
-    config_base.disease = base_disease;
-    config_base.gender = base_genders(base_exp_id);
-    config_base.life_style = base_life_style;
-    config_base.age = base_age;
+    config_base.obs = base_obs;
+
+    for obs_id = 1:size(base_obs_keys, 2)
+        curr_obs = config_base.obs(base_obs_keys{1, obs_id});
+        config_base.(genvarname(base_obs_keys{1, obs_id})) = curr_obs{1, base_exp_id};
+    end
     
-    config_base.suffix = base_suffixes(base_exp_id);
+    config_base.params = base_params;
+    
+    config_base.name = base_name;
+    
     config_base.exp_id = base_exps_ids(base_exp_id);
     
     config_base.is_clustering = 0;
@@ -118,12 +154,16 @@ for advanced_exp_id = 1:num_advanced_exps
     config_advanced.probe_class = advanced_probe_class;
     
     config_advanced.cells = advanced_cells;
-    config_advanced.disease = advanced_disease;
-    config_advanced.gender = advanced_genders(advanced_exp_id);
-    config_advanced.life_style = advanced_life_style;
-    config_advanced.age = advanced_age;
+    config_advanced.obs = advanced_obs;
+
+    for obs_id = 1:size(advanced_obs_keys, 2)
+        curr_obs = config_advanced.obs(advanced_obs_keys{1, obs_id});
+        config_advanced.(genvarname(advanced_obs_keys{1, obs_id})) = curr_obs{1, advanced_exp_id};
+    end
     
-    config_advanced.suffix = advanced_suffixes(advanced_exp_id);
+    config_advanced.params = advanced_params;
+    
+    config_advanced.name = advanced_name;
     config_advanced.exp_id = advanced_exps_ids(advanced_exp_id);
     
     config_advanced.is_clustering = 0;
@@ -156,17 +196,9 @@ for name_id = 1:size(intersection_names,1)
     metrics_data = vertcat(metrics_data, data);
 end
 
-base_suffix = sprintf('%d', base_exps_ids(1));
-for base_exp_id = 2:num_base_exps
-    base_suffix = sprintf('%s_%d', base_suffix, base_exps_ids(base_exp_id));
-end
+suffix = sprintf('class_%d', advanced_exps_ids(1));
+save_config.method = ["class"];
 
-advanced_suffix = sprintf('%d', advanced_exps_ids(1));
-for advanced_exp_id = 2:num_advanced_exps
-    advanced_suffix = sprintf('%s_%d', advanced_suffix, advanced_exps_ids(advanced_exp_id));
-end
-
-suffix = sprintf('class_by_base(%s)_advanced(%s)', base_suffix, advanced_suffix);
 path = sprintf('%s/%s', ...
     save_config.up, ...
     get_result_path(save_config));

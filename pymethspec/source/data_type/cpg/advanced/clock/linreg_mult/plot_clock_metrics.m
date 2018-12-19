@@ -1,10 +1,9 @@
-function plot_clock_metrics(config_lvl_1, config_lvl_2, metric)
+function plot_clock_metrics(config_base, config_advanced, metric)
 
-fn = sprintf('%s/%s/clock_method(%s)%s.xlsx', ...
-    config_lvl_2.up, ...
-    get_result_path(config_lvl_2), ...
-    config_lvl_1.method, ...
-    config_lvl_2.suffix);
+fn = sprintf('%s/%s/%s.xlsx', ...
+    config_advanced.up, ...
+    get_result_path(config_advanced), ...
+    config_base.name);
 
 [num,txt,raw] = xlsread(fn);
 
@@ -17,8 +16,8 @@ metrics = cell2mat(raw(2:end, metric_id));
 
 hold all;
 h = plot(counts, metrics, 'o-', 'LineWidth', 3);
-legend(h, sprintf('gender: %s', config_lvl_2.gender));
-set(h, 'Color', config_lvl_2.color)
+legend(h, sprintf('gender: %s', config_advanced.gender));
+set(h, 'Color', config_advanced.color)
 set(gca, 'FontSize', 30);
 xlabel('count', 'Interpreter', 'latex');
 set(gca, 'FontSize', 30);

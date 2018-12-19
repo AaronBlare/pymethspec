@@ -1,7 +1,7 @@
 clear all;
 
 cpgs = string(importdata('cpgs.txt'));
-prefix = 'class_3_';
+prefix = '';
 config.is_plot_regions = 1;
 
 % ======== config ========
@@ -13,7 +13,7 @@ config.experiment = 'base';
 config.task = 'table';
 config.method = 'linreg';
 
-config.exclude = 'cluster';
+config.exclude = 'none';
 config.cross_reactive = 'ex';
 config.snp = 'ex';
 config.chr = 'NG';
@@ -22,12 +22,30 @@ config.geo = 'any';
 config.probe_class = 'any';
 
 config.cells = 'none';
-config.disease = 'any';
-config.gender = 'vs';
-config.life_style = 'any';
-config.age = 'any';
 
-config.suffix = '_outliers_limit(0.0)_outliers_sigma(0.0)';
+config.obs = containers.Map();
+config.obs('gender') = ['vs'];
+
+obs_keys = config.obs.keys;
+for obs_id = 1:size(obs_keys, 2)
+    config.(genvarname(obs_keys{1, obs_id})) = config.obs(obs_keys{1, obs_id});
+end
+
+config.params = containers.Map();
+config.params('out_limit') = ["0.0"];
+config.params('out_sigma') = ["0.0"];
+
+if isempty(config.params)
+    config.name = 'default';
+else
+    params_keys = sort(config.params.keys);
+    config.name = strcat(params_keys{1, 1}, '(', config.params(params_keys{1, 1}), ')');
+    if size(params_keys, 2) > 1
+        for params_id = 2:size(params_keys, 2)
+            config.name = strcat(config.name, '_', params_keys{1, params_id}, '(', config.params(params_keys{1, params_id}), ')');
+        end
+    end
+end
 
 config.is_clustering = 0;
 
@@ -49,7 +67,7 @@ for cpg_id = 1:size(cpgs, 1)
     
     % ======== processing ========
     f = figure;
-    if strcmp(config.gender, 'versus')
+    if strcmp(config.gender, 'vs')
         config.gender = 'F';
         config.color = 'r';
         plot_linreg_cpg(config, cpg)
@@ -61,7 +79,7 @@ for cpg_id = 1:size(cpgs, 1)
         plot_linreg_cpg(config, cpg)
     end
     
-    suffix = sprintf('cpg(%s)', cpg);
+    name = sprintf('cpg(%s)', cpg);
     
     up_save = get_up_figure_path();
     
@@ -85,7 +103,7 @@ for cpg_id = 1:size(cpgs, 1)
     end
     title(sprintf('%s(%s)', cpg, genes), 'FontSize', 16)
     
-    savefig(f, sprintf('%s/%s%d_linreg_%s.fig', save_path, prefix, cpg_id, suffix))
-    saveas(f, sprintf('%s/%s%d_linreg_%s.png', save_path, prefix, cpg_id, suffix))
+    savefig(f, sprintf('%s/%d_%s%s.fig', save_path, cpg_id, prefix, name))
+    saveas(f, sprintf('%s/%d_%s%s.png', save_path, cpg_id, prefix, name))
     
 end

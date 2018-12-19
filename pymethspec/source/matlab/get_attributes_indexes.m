@@ -3,7 +3,7 @@ age_ann = 'age';
 gender_ann = 'gender';
 disease_ann = 'disease';
 
-fn = sprintf('%s/%s/attributes.txt', config.up, config.data_base);
+fn = sprintf('%s/%s/attribute.txt', config.up, config.data_base);
 ann = importdata(fn);
 
 keys = strsplit(string(ann{1}), ' ')';

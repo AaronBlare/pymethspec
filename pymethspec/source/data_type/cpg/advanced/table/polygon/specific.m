@@ -6,7 +6,7 @@ if strcmp(config_base.gender, 'any')
 else
     [config_base.names, config_base.data_1, config_base.data_2] = get_specific_data(config_base);
     [config_base.metrics_1, config_base.metrics_2] = get_specific_metrics(config_base);
-    [config_base.metrics_diff, config_base.metrics_diff_labels] = get_specific_polygons(config_base);
+    [config_base.metrics_diff, config_base.metrics_diff_labels] = get_specific_polygons(config_base, config_advanced);
     
     num_names = size(config_base.names, 1)
     
