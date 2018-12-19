@@ -1,17 +1,17 @@
 function [names, data] = get_neutral_data(config)
 
-suffix = '';
-if isfield(config, 'suffix')
-    suffix = config.suffix;
+name = '';
+if isfield(config, 'name')
+    name = config.name;
 end
 
-fn = sprintf('%s/%s/top%s.txt', ...
+fn = sprintf('%s/%s/%s.xlsx', ...
     config.up, ...
     get_result_path(config), ...
-    suffix);
+    name);
 raw_data = importdata(fn, ' ');
 
-names = raw_data.textdata;
+names = raw_data.textdata(2:end, 1);
 d_tmp = raw_data.data;
 
 map = containers.Map();

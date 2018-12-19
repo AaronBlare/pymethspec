@@ -1,9 +1,9 @@
 function plot_linreg_cpg(config, cpg)
 
-fn = sprintf('%s/%s/top%s.txt', ...
+fn = sprintf('%s/%s/%s.xlsx', ...
     config.up, ...
     get_result_path(config), ...
-    config.suffix);
+    config.name);
 
 top_data = importdata(fn);
 
@@ -22,7 +22,7 @@ for id = 1:size(indexes, 1)
     ages_passed(id) = ages(index);
 end
 
-fn = sprintf('%s/%s/average_beta.txt', config.up, config.data_base);
+fn = sprintf('%s/%s/cpg_beta.txt', config.up, config.data_base);
 fid = fopen(fn);
 data = textscan(fid, '%s %*[^\n]','HeaderLines',1);
 frewind(fid)

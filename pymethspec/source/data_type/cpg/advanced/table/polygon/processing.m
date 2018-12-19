@@ -13,9 +13,9 @@ config_base.data_type = 'cpg';
 
 config_base.experiment = 'base';
 config_base.task = 'table';
-config_base.method = 'variance_linreg';
+config_base.method = 'linreg';
 
-config_base.exclude = 'cluster';
+config_base.exclude = 'none';
 config_base.cross_reactive = 'ex';
 config_base.snp = 'ex';
 config_base.chr = 'NG';
@@ -24,12 +24,26 @@ config_base.geo = 'any';
 config_base.probe_class = 'any';
 
 config_base.cells = 'none';
-config_base.disease = 'any';
-config_base.gender = 'vs';
-config_base.life_style = 'any';
-config_base.age = 'any';
 
-config_base.suffix = '';
+config_base.obs = containers.Map();
+config_base.obs('gender') = ['vs'];
+
+obs_keys = config_base.obs.keys;
+for obs_id = 1:size(obs_keys, 2)
+    config_base.(genvarname(obs_keys{1, obs_id})) = config_base.obs(obs_keys{1, obs_id});
+end
+
+config_base.params = containers.Map();
+config_base.params('out_limit') = ['0.0'];
+config_base.params('out_sigma') = ['0.0'];
+
+params_keys = sort(config_base.params.keys);
+config_base.name = strcat(params_keys{1, 1}, '(', config_base.params(params_keys{1, 1}), ')');
+if size(params_keys, 2) > 1
+    for params_id = 2:size(params_keys, 2)
+        config_base.name = strcat(config_base.name, '_', params_keys{1, params_id}, '(', config_base.params(params_keys{1, params_id}), ')');
+    end
+end
 
 config_base.is_clustering = 0;
 
@@ -52,16 +66,26 @@ config_advanced.geo = config_base.geo;
 config_advanced.probe_class = config_base.probe_class;
 
 config_advanced.cells = config_base.cells;
-config_advanced.disease = config_base.disease;
-config_advanced.gender = 'vs';
-config_advanced.life_style = config_base.life_style;
-config_advanced.age = config_base.age;
+config_advanced.obs = config_base.obs;
 
-config_advanced.suffix = config_base.suffix;
+for obs_id = 1:size(obs_keys, 2)
+    config_advanced.(genvarname(obs_keys{1, obs_id})) = config_advanced.obs(obs_keys{1, obs_id});
+end
+
+config_advanced.params = containers.Map();
+config_advanced.params('sigma') = ['3'];
+
+params_keys = sort(config_advanced.params.keys);
+config_advanced.name = strcat(params_keys{1, 1}, '(', config_advanced.params(params_keys{1, 1}), ')');
+if size(params_keys, 2) > 1
+    for params_id = 2:size(params_keys, 2)
+        config_advanced.name = strcat(config_advanced.name, '_', params_keys{1, params_id}, '(', config_advanced.params(params_keys{1, params_id}), ')');
+    end
+end
 
 config_advanced.is_clustering = config_base.is_clustering;
 
-config_advanced.up = get_up_figures_path(); 
+config_advanced.up = get_up_data_path(); 
 
 % ======== processing ========
 specific(config_base, config_advanced);

@@ -1,25 +1,26 @@
 function [names, data_1, data_2] = get_specific_data(config)
 
-suffix = '';
-if isfield(config, 'suffix')
-    suffix = config.suffix;
+name = '';
+if isfield(config, 'name')
+    name = config.name;
 end
 
 config.gender = 'F';
-fn = sprintf('%s/%s/top%s.txt', ...
+fn = sprintf('%s/%s/%s.xlsx', ...
     config.up, ...
     get_result_path(config), ...
-    suffix);
+    name);
 raw_data_1 = importdata(fn, ' ');
 
 config.gender = 'M';
-fn = sprintf('%s/%s/top%s.txt', ...
+fn = sprintf('%s/%s/%s.xlsx', ...
     config.up, ...
     get_result_path(config), ...
-    suffix);
+    name);
 raw_data_2 = importdata(fn, ' ');
 
-names_1 = raw_data_1.textdata;
+
+names_1 = raw_data_1.textdata(2:end, 1);
 d_1_tmp = raw_data_1.data;
 
 map_1 = containers.Map();
@@ -27,7 +28,7 @@ for id = 1:size(names_1, 1)
     map_1(string(names_1(id))) = d_1_tmp(id, :);
 end
 
-names_2 = raw_data_2.textdata;
+names_2 = raw_data_2.textdata(2:end, 1);
 d_2_tmp = raw_data_2.data;
 
 map_2 = containers.Map();

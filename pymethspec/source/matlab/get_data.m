@@ -12,7 +12,7 @@ if strcmp(config.method, 'manova')
     types_str = strip(types_str,'left','_');
     file_name = sprintf('top_target(%s)_exog(%s).txt', target_str, types_str);
 else
-    file_name = 'top.txt';
+    file_name = 'default.xlsx';
 end
 
 fn = sprintf('%s/%s/%s', ...

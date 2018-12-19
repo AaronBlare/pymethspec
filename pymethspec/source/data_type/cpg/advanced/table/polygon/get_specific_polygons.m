@@ -1,22 +1,22 @@
-function [metrics_diff, metrics_diff_labels] = get_specific_polygons(config)
+function [metrics_diff, metrics_diff_labels] = get_specific_polygons(config_base, config_advanced)
 
-if strcmp(config.method, 'linreg')
+if strcmp(config_base.method, 'linreg')
     
-    sigma = 3;
+    sigma = str2double(config_advanced.params('sigma'));
     
-    ages = get_ages(config);
+    ages = get_ages(config_base);
     
-    names = config.names;
+    names = config_base.names;
     
-    intercepts_1 = config.data_1(:, 2);
-    slopes_1 = config.data_1(:, 3);
-    intercepts_std_1 = config.data_1(:, 4);
-    slopes_std_1 = config.data_1(:, 5);
+    intercepts_1 = config_base.data_1(:, 2);
+    slopes_1 = config_base.data_1(:, 3);
+    intercepts_std_1 = config_base.data_1(:, 4);
+    slopes_std_1 = config_base.data_1(:, 5);
     
-    intercepts_2 = config.data_2(:, 2);
-    slopes_2 = config.data_2(:, 3);
-    intercepts_std_2 = config.data_2(:, 4);
-    slopes_std_2 = config.data_2(:, 5);
+    intercepts_2 = config_base.data_2(:, 2);
+    slopes_2 = config_base.data_2(:, 3);
+    intercepts_std_2 = config_base.data_2(:, 4);
+    slopes_std_2 = config_base.data_2(:, 5);
     
     x = [min(ages), max(ages), max(ages), min(ages)];
     
@@ -86,38 +86,42 @@ if strcmp(config.method, 'linreg')
             slope_intersection(id) = area_intersection / area_union;
         end
         
+        if mod(id, 1000) == 0
+            id = id
+        end
+        
     end
     
     metrics_diff = horzcat(areas, areas_normed, variance_diff, slope_intersection);
-    metrics_diff_labels = ["areas", "areas_normed", "variance", "slope_intersection"];
+    metrics_diff_labels = ["poly_area_abs", "poly_area_rel", "variance_ratio", "slope_interval_rel"];
 
-elseif strcmp(config.method, 'variance_linreg')
+elseif strcmp(config_base.method, 'variance_linreg')
     
-    sigma = 3;
+    sigma = str2double(config_advanced.params('sigma'));
     
-    ages = get_ages(config);
+    ages = get_ages(config_base);
     
-    names = config.names;
+    names = config_base.names;
     
-    intercepts_1 = config.data_1(:, 2);
-    slopes_1 = config.data_1(:, 3);
-    intercepts_std_1 = config.data_1(:, 4);
-    slopes_std_1 = config.data_1(:, 5);
+    intercepts_1 = config_base.data_1(:, 2);
+    slopes_1 = config_base.data_1(:, 3);
+    intercepts_std_1 = config_base.data_1(:, 4);
+    slopes_std_1 = config_base.data_1(:, 5);
     
-    intercepts_2 = config.data_2(:, 2);
-    slopes_2 = config.data_2(:, 3);
-    intercepts_std_2 = config.data_2(:, 4);
-    slopes_std_2 = config.data_2(:, 5);
+    intercepts_2 = config_base.data_2(:, 2);
+    slopes_2 = config_base.data_2(:, 3);
+    intercepts_std_2 = config_base.data_2(:, 4);
+    slopes_std_2 = config_base.data_2(:, 5);
     
-    intercepts_var_1 = config.data_1(:, 9);
-    slopes_var_1 = config.data_1(:, 10);
-    intercepts_std_var_1 = config.data_1(:, 11);
-    slopes_std_var_1 = config.data_1(:, 12);
+    intercepts_var_1 = config_base.data_1(:, 9);
+    slopes_var_1 = config_base.data_1(:, 10);
+    intercepts_std_var_1 = config_base.data_1(:, 11);
+    slopes_std_var_1 = config_base.data_1(:, 12);
     
-    intercepts_var_2 = config.data_2(:, 9);
-    slopes_var_2 = config.data_2(:, 10);
-    intercepts_std_var_2 = config.data_2(:, 11);
-    slopes_std_var_2 = config.data_2(:, 12);
+    intercepts_var_2 = config_base.data_2(:, 9);
+    slopes_var_2 = config_base.data_2(:, 10);
+    intercepts_std_var_2 = config_base.data_2(:, 11);
+    slopes_std_var_2 = config_base.data_2(:, 12);
     
     x = [min(ages), max(ages), max(ages), min(ages)];
     
@@ -252,16 +256,20 @@ elseif strcmp(config.method, 'variance_linreg')
             slope_intersection_var(id) = area_intersection_var / area_union_var;
         end
         
+        if mod(id, 1000) == 0
+            id = id
+        end
+        
     end
     
     metrics_diff = horzcat(areas, areas_normed, variance_diff, slope_intersection, areas_var, areas_normed_var, variance_diff_var, slope_intersection_var);
-    metrics_diff_labels = ["area_intersection_abs", "area_intersection_rel", "variance", "slope_intersection", "area_intersection_abs_var", "area_intersection_rel_var", "variance_var", "slope_intersection_var"];    
+    metrics_diff_labels = ["poly_area_abs", "poly_area_rel", "variance_ratio", "slope_interval_rel", "poly_area_abs_var", "poly_area_rel_var", "variance_ratio_var", "slope_interval_rel_var"];    
     
 else
     
-    metrics_diff = zeros(size(config.names, 1), 1);
-    for gene_id = 1:size(config.names, 1)
-        metrics_diff(gene_id) = abs(config.metrics_1(gene_id) - config.metrics_2(gene_id));
+    metrics_diff = zeros(size(config_base.names, 1), 1);
+    for gene_id = 1:size(config_base.names, 1)
+        metrics_diff(gene_id) = abs(config_base.metrics_1(gene_id) - config_base.metrics_2(gene_id));
     end
     metrics_diff_labels = ["metric"];
 

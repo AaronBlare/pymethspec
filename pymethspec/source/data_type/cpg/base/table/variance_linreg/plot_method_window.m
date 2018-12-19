@@ -10,9 +10,9 @@ config.data_type = 'cpg';
 
 config.experiment = 'base';
 config.task = 'table';
-config.method = 'linreg';
+config.method = 'variance_linreg';
 
-config.exclude = 'cluster';
+config.exclude = 'none';
 config.cross_reactive = 'ex';
 config.snp = 'ex';
 config.chr = 'NG';
@@ -21,10 +21,27 @@ config.geo = 'any';
 config.probe_class = 'any';
 
 config.cells = 'none';
-config.disease = 'any';
-config.gender = 'vs';
-config.life_style = 'any';
-config.age = 'any';
+config.obs = containers.Map();
+config.obs('gender') = ['vs'];
+
+obs_keys = config.obs.keys;
+for obs_id = 1:size(obs_keys, 2)
+    config.(genvarname(obs_keys{1, obs_id})) = config.obs(obs_keys{1, obs_id});
+end
+
+config.params = containers.Map();
+
+if isempty(config.params)
+    config.name = 'default';
+else
+    params_keys = sort(config.params.keys);
+    config.name = strcat(params_keys{1, 1}, '(', config.params(params_keys{1, 1}), ')');
+    if size(params_keys, 2) > 1
+        for params_id = 2:size(params_keys, 2)
+            config.name = strcat(config.name, '_', params_keys{1, params_id}, '(', config.params(params_keys{1, params_id}), ')');
+        end
+    end
+end
 
 config.is_clustering = 0;
 
@@ -79,6 +96,6 @@ for cpg_id = 1:size(cpgs, 1)
     end
     title(sprintf('%s(%s)', cpg, genes), 'FontSize', 16)
     
-    savefig(f, sprintf('%s/%d_variance_linreg_window_%s.fig', save_path, cpg_id, suffix))
-    saveas(f, sprintf('%s/%d_variance_linreg_window_%s.png', save_path, cpg_id, suffix))
+    savefig(f, sprintf('%s/%d_delta_window_%s.fig', save_path, cpg_id, suffix))
+    saveas(f, sprintf('%s/%d_delta_window_%s.png', save_path, cpg_id, suffix))
 end
