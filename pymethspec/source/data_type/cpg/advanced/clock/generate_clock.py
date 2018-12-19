@@ -2,33 +2,44 @@ from source.config.data.data import *
 from source.config.setup.setup import *
 from source.config.annotation.annotation import *
 from source.config.attribute.attribute import *
+from source.config.auxillary.clock import *
 from source.config.config import *
-from source.data_type.cpg.base.table.linreg.processing import *
-from source.data_type.cpg.base.table.cluster.processing import *
-from source.data_type.cpg.base.table.variance_linreg.processing import *
+from source.data_type.cpg.advanced.clock.linreg.processing import *
 
 
-def generate_table(config):
-    if config.setup.method == Method.linreg:
-        generate_table_linreg(config)
-    elif config.setup.method == Method.cluster:
-        generate_table_cluster(config)
-    elif config.setup.method == Method.variance_linreg:
-        generate_table_variance_linreg(config)
+
+def generate_clock(config_from, config_to):
+    if config_to.setup.method == Method.linreg:
+        generate_clock_linreg(config_from, config_to)
 
 
 data = Data(
     name='cpg_beta',
     type=DataType.cpg,
     path='',
-    base=DataBase.GSE40279.value
+    base=DataBase.GSE87571.value
 )
 
-setup = Setup(
+setup_from = Setup(
     experiment=Experiment.base,
     task=Task.table,
     method=Method.linreg,
-    params={},
+    params={
+        'out_limit': 0.0,
+        'out_sigma': 0.0
+    },
+    suffix='',
+)
+
+setup_to = Setup(
+    experiment=Experiment.advanced,
+    task=Task.clock,
+    method=Method.linreg,
+    params={
+        'exog_type': ClockExogType.all.value,
+        'exog_num': 100,
+        'exog_num_comb': 100
+    },
     suffix='',
 )
 
@@ -58,12 +69,20 @@ obs_list = [
 for obs in obs_list:
     attribute.obs = obs
 
-    config = Config(
+    config_from = Config(
         data=data,
-        setup=setup,
+        setup=setup_from,
         annotation=annotation,
         attribute=attribute,
         target=AttributeKey.age.value
     )
 
-    generate_table(config)
+    config_to = Config(
+        data=data,
+        setup=setup_to,
+        annotation=annotation,
+        attribute=attribute,
+        target=AttributeKey.age.value
+    )
+
+    generate_clock(config_from, config_to)
