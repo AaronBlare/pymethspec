@@ -11,8 +11,8 @@ def save_table_dict(config, table_dict):
     writer.save()
 
     fn = get_table_path(config) + '/' + config.setup.get_file_name() + '.csv'
-    with open(fn, 'w', newline='') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=table_dict.keys())
+    with open(fn, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=table_dict.keys(), lineterminator='\n')
         writer.writeheader()
         for id in range(0, len(list(table_dict.values())[0])):
             tmp_dict = {}
