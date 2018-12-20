@@ -1,6 +1,6 @@
 clear all;
 
-num_base_exps = 2;
+num_base_exps = 1;
 num_advanced_exps = 1;
 target_base_exp = 1;
 
@@ -9,9 +9,9 @@ data_type = 'cpg';
 
 base_experiment = 'base';
 base_task = 'table';
-base_methods = ["linreg", "linreg"];
+base_methods = ["variance_linreg"];
 
-base_exclude = 'none';
+base_exclude = 'cluster';
 base_cross_reactive = 'ex';
 base_snp = 'ex';
 base_chr = 'NG';
@@ -27,8 +27,8 @@ base_obs('gender') = ["vs", "any"];
 base_obs_keys = base_obs.keys;
 
 base_params = containers.Map();
-base_params('out_limit') = ["0.0"];
-base_params('out_sigma') = ["0.0"];
+% base_params('out_limit') = ["0.0"];
+% base_params('out_sigma') = ["0.0"];
 
 if isempty(base_params)
     base_name = 'default';
@@ -42,13 +42,13 @@ else
     end
 end
 
-base_exps_ids = [3, 3];
+base_exps_ids = [7];
 
 advanced_experiment = 'advanced';
 advanced_task = 'table';
 advanced_methods = ["polygon"];
 
-advanced_exclude = 'none';
+advanced_exclude = 'cluster';
 advanced_cross_reactive = 'ex';
 advanced_snp = 'ex';
 advanced_chr = 'NG';
@@ -66,19 +66,15 @@ advanced_obs_keys = advanced_obs.keys;
 advanced_params = containers.Map();
 advanced_params('sigma') = ["3"];
 
-if isempty(advanced_params)
-    advanced_name = 'default';
-else
-    advanced_params_keys = sort(advanced_params.keys);
-    advanced_name = strcat(advanced_params_keys{1, 1}, '(', advanced_params(advanced_params_keys{1, 1}), ')');
-    if size(advanced_params_keys, 2) > 1
-        for params_id = 2:size(advanced_params_keys, 2)
-            advanced_name = strcat(advanced_name, '_', advanced_params_keys{1, params_id}, '(', advanced_params(advanced_params_keys{1, params_id}), ')');
-        end
+advanced_name = strcat('method(', base_methods(1), ')');
+advanced_params_keys = sort(advanced_params.keys);
+if size(advanced_params_keys, 2) > 0
+    for params_id = 1:size(advanced_params_keys, 2)
+        advanced_name = strcat(advanced_name, '_', advanced_params_keys{1, params_id}, '(', advanced_params(advanced_params_keys{1, params_id}), ')');
     end
 end
 
-advanced_exps_ids = [3];
+advanced_exps_ids = [7];
 
 all_metrics_labels = [];
 intersection_names = [];

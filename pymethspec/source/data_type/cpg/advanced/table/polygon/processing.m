@@ -13,9 +13,9 @@ config_base.data_type = 'cpg';
 
 config_base.experiment = 'base';
 config_base.task = 'table';
-config_base.method = 'linreg';
+config_base.method = 'variance_linreg';
 
-config_base.exclude = 'none';
+config_base.exclude = 'cluster';
 config_base.cross_reactive = 'ex';
 config_base.snp = 'ex';
 config_base.chr = 'NG';
@@ -34,14 +34,18 @@ for obs_id = 1:size(obs_keys, 2)
 end
 
 config_base.params = containers.Map();
-config_base.params('out_limit') = ['0.0'];
-config_base.params('out_sigma') = ['0.0'];
+% config_base.params('out_limit') = ['0.0'];
+% config_base.params('out_sigma') = ['0.0'];
 
-params_keys = sort(config_base.params.keys);
-config_base.name = strcat(params_keys{1, 1}, '(', config_base.params(params_keys{1, 1}), ')');
-if size(params_keys, 2) > 1
-    for params_id = 2:size(params_keys, 2)
-        config_base.name = strcat(config_base.name, '_', params_keys{1, params_id}, '(', config_base.params(params_keys{1, params_id}), ')');
+if isempty(config_base.params)
+    config_base.name = 'default';
+else
+    params_keys = sort(config_base.params.keys);
+    config_base.name = strcat(params_keys{1, 1}, '(', config_base.params(params_keys{1, 1}), ')');
+    if size(params_keys, 2) > 1
+        for params_id = 2:size(params_keys, 2)
+            config_base.name = strcat(config_base.name, '_', params_keys{1, params_id}, '(', config_base.params(params_keys{1, params_id}), ')');
+        end
     end
 end
 
@@ -75,10 +79,10 @@ end
 config_advanced.params = containers.Map();
 config_advanced.params('sigma') = ['3'];
 
+config_advanced.name = strcat('method(', config_base.method, ')');
 params_keys = sort(config_advanced.params.keys);
-config_advanced.name = strcat(params_keys{1, 1}, '(', config_advanced.params(params_keys{1, 1}), ')');
-if size(params_keys, 2) > 1
-    for params_id = 2:size(params_keys, 2)
+if size(params_keys, 2) > 0
+    for params_id = 1:size(params_keys, 2)
         config_advanced.name = strcat(config_advanced.name, '_', params_keys{1, params_id}, '(', config_advanced.params(params_keys{1, params_id}), ')');
     end
 end

@@ -11,7 +11,7 @@ config.experiment = 'base';
 config.task = 'table';
 config.method = 'variance_linreg';
 
-config.exclude = 'none';
+config.exclude = 'cluster';
 config.cross_reactive = 'ex';
 config.snp = 'ex';
 config.chr = 'NG';

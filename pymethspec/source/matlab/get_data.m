@@ -19,8 +19,8 @@ fn = sprintf('%s/%s/%s', ...
     config.up, ...
     get_result_path(config), ...
     file_name);
-raw_data = importdata(fn, ' ');
+raw_data = importdata(fn, '\t');
 
-names = raw_data.textdata;
+names = raw_data.textdata(2:end, 1);
 data = raw_data.data;
 end
