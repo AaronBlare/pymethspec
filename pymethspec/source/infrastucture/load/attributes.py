@@ -20,7 +20,7 @@ def load_attribute_dict(config):
         possible_keys = [config.target] + list(config.attribute.obs.keys())
         f = open(fn_txt)
         key_line = f.readline()
-        keys = key_line.split(' ')
+        keys = key_line.split('\t')
         keys = [x.rstrip() for x in keys]
 
         attribute_dict = {}
@@ -29,7 +29,7 @@ def load_attribute_dict(config):
                 attribute_dict[key] = []
 
         for line in f:
-            values = line.split(' ')
+            values = line.split('\t')
             for key_id in range(0, len(keys)):
                 key = keys[key_id]
                 if key in possible_keys:

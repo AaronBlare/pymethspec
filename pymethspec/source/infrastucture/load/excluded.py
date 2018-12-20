@@ -21,6 +21,7 @@ def load_excluded(config):
         else:
             f = open(fn_txt)
             exclude = f.readlines()
+            exclude = [x.rstrip() for x in exclude]
             f.close()
 
             f = open(fn_pkl, 'wb')
